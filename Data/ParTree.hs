@@ -12,11 +12,9 @@ import qualified Data.Map   as M
 
 import Control.Concurrent.STM
 
---Implementation of Parallel generic tree
---Need to append levels on this tree
-
 type Levels a = a
 data Tree a= Empty | Node a deriving Show
+
 
 instance Functor Tree where
 	fmap f (Node value) = Node (f value)
@@ -39,5 +37,12 @@ constructTree func value = (Node (func value))
 filterTree:: Tree [a] -> (a -> Bool) -> Tree [a]
 filterTree Empty _= Empty
 filterTree (Node value) func = Node (filter func value)
+
+find:: Tree [a] -> a -> Bool
+find tree findvalue = case tree of Empty -> False
+	      					(Node value) -> True
+
+equal:: Tree a -> Tree a -> Bool
+equal (Node value) (Node value2) = value == value2
 
 --TODO: flatten
